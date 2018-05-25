@@ -64,6 +64,7 @@ export default {
           day: this.day
         },
         success: function() {
+          //保存成功回到设置页面
           wx.navigateTo({
             url: `/pages/index/main`
           });
