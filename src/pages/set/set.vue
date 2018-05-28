@@ -43,6 +43,20 @@ export default {
       this.days.push(i)
     }
   },
+  onLoad() {
+    //判断是否存在缓存，若存在优先显示
+    let setInfo = getApp().globalData.setInfo;
+
+    if(setInfo && (setInfo !== {} || setInfo !== null)) {
+      this.isDaySelect = true;
+      this.isDateSelect = true;
+      this.date = setInfo.date;
+      this.day = setInfo.day;
+    }else {
+      this.isDaySelect = false;
+      this.isDateSelect = false;
+    }
+  },
   methods: {
     //选择最近一次光临时间
     bindDateChange(e) {
@@ -71,6 +85,7 @@ export default {
         }
       });
 
+      //设置全局变量
       getApp().globalData.setInfo = {
           date: this.date,
           day: this.day

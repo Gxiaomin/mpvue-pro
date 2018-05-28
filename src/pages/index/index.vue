@@ -13,10 +13,13 @@
 
     <div class="user-history">
       <div v-if="!isSet">
-        <span>您还没有设置过，立即前往记录~~~</span>
+        <span>您还没有设置过，立即前往设置~~~</span>
         <button v-if="!isSet" size="mini" type="primary" @click="setSecretDate" style="background-color: #db7093;">去设置</button>
       </div>
-      <button v-else size="mini" type="primary" @click="setSecretDate" style="background-color: #db7093;">查看</button>
+      <div v-else>
+        <span>已经设置过了，立即查看</span>
+        <button size="mini" type="primary" @click="setSecretDate" style="background-color: #db7093;">查看</button>
+      </div>
     </div>
   </div>
 </template>
@@ -72,11 +75,9 @@ export default {
       this.getUserInfo();
     }
   },
-  created () {
-    // 调用应用实例的方法获取全局数据
-    this.getUserInfo();
-    
-    let info = wx.getStorage({key: 'setInfo'});
+  onLoad() {
+    //获取缓存，并修改全局变量
+    let info = wx.getStorageSync('setInfo');
     if(info) {
       this.isSet = true;
       getApp().globalData.setInfo = info;
@@ -84,6 +85,10 @@ export default {
       this.isSet = false;
       getApp().globalData.setInfo = {};
     }
+  },
+  created () {
+    // 调用应用实例的方法获取全局数据
+    this.getUserInfo();
   }
 }
 </script>
