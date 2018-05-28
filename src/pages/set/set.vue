@@ -47,7 +47,7 @@ export default {
     //判断是否存在缓存，若存在优先显示
     let setInfo = getApp().globalData.setInfo;
 
-    if(setInfo && (setInfo !== {} || setInfo !== null)) {
+    if(setInfo && JSON.stringify(setInfo) !== '{}') {
       this.isDaySelect = true;
       this.isDateSelect = true;
       this.date = setInfo.date;
@@ -70,6 +70,9 @@ export default {
     },
     //保存按钮
     onSaveClick() {
+      if(!this.day || !this.date) {
+        return;
+      }
       //本地缓存
       wx.setStorage({
         key:"setInfo",
